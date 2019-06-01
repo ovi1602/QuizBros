@@ -2,11 +2,11 @@ module.exports = function(app, passport) {
  app.get('/', function(req, res){
   res.render('index.ejs');
  });
-
+//START LOGIN
  app.get('/login', function(req, res){
   res.render('login.ejs', {message:req.flash('loginMessage')});
  });
-
+ 
  app.post('/login', passport.authenticate('local-login', {
   successRedirect: '/profile',
   failureRedirect: '/login',
@@ -21,6 +21,7 @@ module.exports = function(app, passport) {
    res.redirect('/');
   });
 
+  // SIGN UP
  app.get('/signup', function(req, res){
   res.render('signup.ejs', {message: req.flash('signupMessage')});
  });
@@ -42,9 +43,33 @@ module.exports = function(app, passport) {
   res.redirect('/');
  })
 
+
+ //AFISARE DE INTREBARI
+
  app.get('/questions', function(req, res){
+
+    var mysql = require('mysql');
+
+var con = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "quizbros"
+});
+
+con.connect(function(err) {
+  if (err) throw err;
+  con.query("SELECT title, answer1, answer2 FROM questions", function (err, result) {
+    if (err) throw err;
+    console.log(result);
+    // res.send(result); asta nu merge
+  });
+});
     res.render('questions.ejs', {message: req.flash('questionsMessage')})
 });
+
+
+//POSTARE DE INTREBARI
 app.post('/questions',function(res,req){ console.log("aici");
 
 var mysql2 = require('mysql');
