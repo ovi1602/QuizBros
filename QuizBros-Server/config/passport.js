@@ -21,6 +21,33 @@ module.exports = function(passport) {
    });
  });
 
+ passport.use(
+    'local-questions',
+    new LocalStrategy(
+    function(req, title, answer1, answer2, done){
+        console.log("aici");
+        var newQuestionMysql = {
+            title: title,
+            answer1: answer1,
+            answer2: answer2
+           };
+           var insertQuery = "INSERT INTO questions (title, answer1, answer2) values (?, ?, ?)";
+      
+           connection.query(insertQuery, [newQuestionMysql.title, newQuestionMysql.answer1, newQuestionMysql.answer2],
+            function(err, rows){
+                if(err) {
+                    
+                    return done(null, false, req.flash('questionsMessage', 'Something went wrong'));
+                    
+                }
+             newQuestionMysql.id = rows.insertId;
+      
+             return done(null, newQuestionMysql);
+        });
+      }
+     )
+    );
+
  
 
  passport.use(
@@ -31,6 +58,7 @@ module.exports = function(passport) {
    passReqToCallback: true
   },
   function(req, username, password, done){
+    console.log("register");
    connection.query("SELECT * FROM users WHERE username = ? ", 
    [username], function(err, rows){
     if(err)
@@ -80,39 +108,7 @@ module.exports = function(passport) {
   })
  );
 
- passport.use(
-    'local-postquestion',
-    new LocalStrategy({
-        titleField: 'title',
-        answer1Field: 'answer1',
-        answer2Field: 'answer2'
-    },
-    function(req, title, answer1, answer2, done){
-     
-        var newQuestionMysql = {
-            title: title,
-            answer1: answer1,
-            answer2: answer2
-           };
 
-           console.log("aici");
-      
-           var insertQuery = "INSERT INTO questions (title, answer1, answer2) values (?, ?, ?)";
-      
-           connection.query(insertQuery, [newQuestionMysql.title, newQuestionMysql.answer1, newQuestionMysql.answer2],
-            function(err, rows){
-                if(err) {
-                    
-                    return done(null, false, req.flash('questionsMessage', 'Something went wrong'));
-                    
-                }
-             newQuestionMysql.id = rows.insertId;
-      
-             return done(null, newQuestionMysql);
-        });
-      }
-     )
-    );
 
 
 };

@@ -45,11 +45,39 @@ module.exports = function(app, passport) {
  app.get('/questions', function(req, res){
     res.render('questions.ejs', {message: req.flash('questionsMessage')})
 });
-app.post('/questions', passport.authenticate('local-postquestion', {
-    successRedirect: '/questions',
-    failureRedirect: '/profile',
-    failureFlash: true
-   }));
+app.post('/questions',function(res,req){ console.log("aici");
+
+var mysql2 = require('mysql');
+var con = mysql2.createConnection({
+    host: "localhost",
+    user: "root",
+    password:"",
+    database:"quizbros"
+});
+con.on('error', function(err) {
+    console.log("[mysql error]",err);
+  });
+
+
+    console.log("connected");
+
+  //  var newQuestionMysql = {
+  //      title: req.body.title,
+  //      answer1: req.body.answer1,
+  //      answer2: req.body.answer2
+  //     };
+       var insertQuery = "INSERT INTO questions (title, answer1, answer2) VALUES (?, ?, ?)";
+  console.log(res.body.title + " " + res.body.answer1 + " " + res.body.answer2)
+       con.query(insertQuery, [res.body.title, res.body.answer1, res.body.answer2]);
+    
+
+ 
+
+
+
+    req.redirect('/questions');
+
+});
 };
 
 function isLoggedIn(req, res, next){

@@ -2,8 +2,9 @@ module.exports = {
  'connection':{
   'host':'localhost',
   'user':'root',
-  'password':''
+  'password':'',
  },
  'database':'quizbros',
- 'user_table':'users'
+ 'user_table':'users',
+ 'quiz_table':'questions'
 }
