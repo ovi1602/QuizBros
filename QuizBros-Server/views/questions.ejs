@@ -19,9 +19,9 @@
   <div class="col-sm-6 col-sm-offset-3">
    <h2>Questions</h2>
 
-   <% if(message.length > 0) { %>
-    <div class="alert alert-danger"><%= message %></div> 
-   <% } %>
+  
+ 
+ 
 
    <form action="/questions" method="post">
     <div class="form-group">
@@ -40,10 +40,30 @@
     <button type="submit" class="btn btn-succcess btn-lg">Submit</button>
    </form>
 
+
    <hr>
 
    <p>Need an account <a href="/signup">Register</a></p>
    <p>Go Back <a href="/">Home</a>.</p>
+
+
+
+<div>
+        Intrebari
+    <table class="table table-hovered">
+        <tbody>
+                <%= questions.forEach(question => { %>
+            <tr> 
+                <td><%= question.id %> </td>
+            </tr>
+            <%=  %>
+        </tbody>
+
+    </table>
+    
+
+   
+</div> 
   </div>
  </div>
 </body>

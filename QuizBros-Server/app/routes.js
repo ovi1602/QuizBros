@@ -63,9 +63,14 @@ con.connect(function(err) {
     if (err) throw err;
     console.log(result);
     // res.send(result); asta nu merge
+
+    //req.send(result);
+    //message:req.flash(result)
+    //res.json({data: result});
+    res.render('questions.ejs', {questions:result});
   });
 });
-    res.render('questions.ejs', {message: req.flash('questionsMessage')})
+    //res.render('questions.ejs', {message: req.flash(result)})
 });
 
 
