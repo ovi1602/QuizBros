@@ -46,9 +46,9 @@ module.exports = function(app, passport) {
 
 
 
- //AFISARE DE INTREBARI
+ //AFISARE DE INTREBARI in consola
 
- app.get('/questions', function(req, res){
+ app.get('/questions', isLoggedIn, function(req, res){
 
     var mysql = require('mysql');
 
@@ -61,7 +61,7 @@ var con = mysql.createConnection({
 
 con.connect(function(err) {
   if (err) throw err;
-  con.query("SELECT title, answer1, answer2 FROM questions", function (err, result) {
+  con.query("SELECT * FROM questions", function (err, result) {
     if (err) throw err;
     console.log(result);
     // res.send(result); asta nu merge

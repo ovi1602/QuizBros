@@ -1,13 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<% include header.ejs %>
  <title> Questions</title>
- <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
- <link rel="stylesheet" 
- href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
  <style>
   html{
    padding:50px;
@@ -52,12 +44,15 @@
 <table class="table table-hovered">
     <thead>
         <tr>
-            <th scope="col"> </th>
+            <th scope="col"> Id </th>
             <th scope="col"> Question </th>
             <th scope="col"> Answer1 </th>
             <th scope="col"> </th>
             <th scope="col"> Answer2 </th>
             <th scope="col"> </th>
+            <th scope="col"> %Ans1</th>
+            <th scope="col"> %Ans2</th>
+            <th scope="col">  </th>
         </tr>
     </thead>
     <tbody>
@@ -66,9 +61,12 @@
             <td><%= question.id %> </td>
             <td><%= question.title %></td>
             <td><%= question.answer1 %> </td>
-            <td> <a href="/vote1/<%=question.title%>" class = "btn btn-sm btn-success"> Vote Ans 1</a></td>
+            <td> <a href="/vote1/<%=question.id%>" class = "btn btn-sm btn-success"> Vote Ans 1</a></td>
             <td> <%= question.answer2 %></td>
-            <td> <a href="/vote2" class = "btn btn-sm btn-success"> Vote Ans 2</a></td>
+            <td> <a href="/vote2/<%=question.id%>" class = "btn btn-sm btn-success"> Vote Ans 2</a></td>
+            <td> <%= Math.round(question.numarvoturi1 / (question.numarvoturi1 + question.numarvoturi2) * 100) %> %</td>
+            <td> <%= Math.round(question.numarvoturi2 / (question.numarvoturi1 + question.numarvoturi2) * 100) %> %</td>
+            <td> <a href="/delete1/<%=question.id%>" class = "btn btn-sm btn-danger"> DELETE</a></td>
         </tr>
         <% }) %>
     </tbody>

@@ -1,3 +1,5 @@
+
+
 var express = require('express');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
@@ -8,6 +10,8 @@ var port = process.env.PORT || 8080;
 
 const {getQuestions} = require('./app/questions');
 const {vote1} = require('./app/questions');
+const {vote2} = require('./app/questions');
+const {delete1} = require('./app/questions');
 
 var passport = require('passport');
 var flash = require('connect-flash');
@@ -38,4 +42,7 @@ app.listen(port);
 console.log("Port: " + port);
 
 app.get('/questions', getQuestions);
-app.get('/vote1/:title', vote1);
+app.get('/vote1/:id', vote1);
+app.get('/vote2/:id', vote2);
+app.get('/delete1/:id', delete1);
+

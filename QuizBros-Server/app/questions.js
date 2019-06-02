@@ -24,8 +24,8 @@ module.exports = {
  },
 
  vote1: (req, res) => {
-   let questionTitle = req.params.title;
-   let query = 'UPDATE Questions SET numarvoturi1 = numarvoturi1 + 1 WHERE title = "' + questionTitle + '"';
+   let questionId = req.params.id;
+   let query = 'UPDATE questions SET numarvoturi1 = numarvoturi1 + 1 WHERE id = "' + questionId + '"';
    var mysql = require('mysql');
 
    var con = mysql.createConnection({
@@ -45,8 +45,30 @@ module.exports = {
 
  },
  vote2: (req, res) => {
-  let questionTitle = req.params.title;
-  let query = 'UPDATE Questions SET numarvoturi2 = numarvoturi2 + 1 WHERE title = "' + questionTitle + '"';
+  let questionId = req.params.id;
+  let query = 'UPDATE questions SET numarvoturi2 = numarvoturi2 + 1 WHERE id = "' + questionId + '"';
+  var mysql = require('mysql');
+
+  var con = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "quizbros"
+  });
+
+  con.query(query, (err, result) => {
+    if(err) return res.status(500).send(err);
+  
+
+  res.redirect('/questions');
+ }
+  )
+
+},
+
+delete1: (req, res) => {
+  let questionId = req.params.id;
+  let query = 'DELETE FROM questions WHERE id = "' + questionId + '"';
   var mysql = require('mysql');
 
   var con = mysql.createConnection({
