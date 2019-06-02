@@ -16,7 +16,7 @@
 </head>
 <body>
  <div class="container">
-  <div class="col-sm-6 col-sm-offset-3">
+  <div class="col-sm-12 ">
    <h2>Questions</h2>
 
   
@@ -43,27 +43,44 @@
 
    <hr>
 
-   <p>Need an account <a href="/signup">Register</a></p>
-   <p>Go Back <a href="/">Home</a>.</p>
-
-
-
-<div>
-        Intrebari
-    <table class="table table-hovered">
-        <tbody>
-                <%= questions.forEach(question => { %>
-            <tr> 
-                <td><%= question.id %> </td>
-            </tr>
-            <%=  %>
-        </tbody>
-
-    </table>
-    
-
    
+   <p>Go Back <a href="/profile">to your profile</a>.</p>
+
+   <% if (questions.length >0 ) { %>
+    <div>
+    Intrebari
+<table class="table table-hovered">
+    <thead>
+        <tr>
+            <th scope="col"> </th>
+            <th scope="col"> Question </th>
+            <th scope="col"> Answer1 </th>
+            <th scope="col"> </th>
+            <th scope="col"> Answer2 </th>
+            <th scope="col"> </th>
+        </tr>
+    </thead>
+    <tbody>
+            <% questions.forEach((question, index) => { %>
+        <tr> 
+            <td><%= question.id %> </td>
+            <td><%= question.title %></td>
+            <td><%= question.answer1 %> </td>
+            <td> <a href="/vote1/<%=question.title%>" class = "btn btn-sm btn-success"> Vote Ans 1</a></td>
+            <td> <%= question.answer2 %></td>
+            <td> <a href="/vote2" class = "btn btn-sm btn-success"> Vote Ans 2</a></td>
+        </tr>
+        <% }) %>
+    </tbody>
+
+</table>
+
+
+
 </div> 
+   <% } else { %>
+    <div class="alert alert-danger"> No questions yet.</div>
+    <% } %>
   </div>
  </div>
 </body>

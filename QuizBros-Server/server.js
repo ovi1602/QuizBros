@@ -6,6 +6,9 @@ var morgan = require('morgan');
 var app = express();
 var port = process.env.PORT || 8080;
 
+const {getQuestions} = require('./app/questions');
+const {vote1} = require('./app/questions');
+
 var passport = require('passport');
 var flash = require('connect-flash');
 
@@ -33,3 +36,6 @@ require('./app/routes.js')(app, passport);
 
 app.listen(port);
 console.log("Port: " + port);
+
+app.get('/questions', getQuestions);
+app.get('/vote1/:title', vote1);
